@@ -13,10 +13,9 @@ pub struct StocksDb {
 }
 #[allow(dead_code)]
 impl StocksDb {
-    pub fn new(stocks: &Vec<Stock>) -> Self {
-        StocksDb {
-            stocks: (*stocks).to_vec(),
-        }
+    pub fn new(mut stocks: Vec<Stock>) -> Self {
+        stocks.sort_by(|a, b| a.symbol.cmp(&b.symbol));
+        StocksDb { stocks }
     }
     pub fn search_by_symbol(&self, symbol: &str) -> Option<&Stock> {
         self.stocks
@@ -30,5 +29,39 @@ impl StocksDb {
             .iter()
             .find(|&stock| stock.name.to_lowercase().contains(&name_lower))
             .map(|v| v as _)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn finds_symbol() {
+        let stocks_json = r#"[
+    {
+        "symbol": "AAPL",
+        "name": "Apple Inc.",
+        "is_etf": false
+    },
+    {
+        "symbol": "MSFT",
+        "name": "Microsoft Corporation",
+        "is_etf": false
+    },
+    {
+        "symbol": "SPY",
+        "name": "SPDR S&P 500 ETF Trust",
+        "is_etf": true
+    },
+    {
+        "symbol": "QQQ",
+        "name": "Invesco QQQ Trust",
+        "is_etf": true
+    }
+]"#;
+        let stocks: Vec<Stock> = serde_json::from_str(stocks_json).expect("failed to load stocks");
+        let db = StocksDb::new(stocks);
+        assert!(db.search_by_symbol("AAPL").is_some());
     }
 }
