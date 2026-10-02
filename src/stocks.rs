@@ -60,8 +60,8 @@ mod tests {
     }
 ]"#;
         let stocks: Vec<Stock> = serde_json::from_str(stocks_json).expect("failed to load stocks");
-        let db = StocksDb::new(stocks);
-        db
+        StocksDb::new(stocks)
+
     }
     #[test]
     fn finds_symbol() {
@@ -69,18 +69,18 @@ mod tests {
         assert!(db.search_by_symbol("AAPL").is_some());
     }
     #[test]
-    fn non_exiting_symbol() {
+    fn non_existing_symbol() {
         let db = create_sample_db();
         assert!(db.search_by_symbol("ZZZZ").is_none())
     }
     #[test]
     fn find_last_symbol() {
         let db = create_sample_db();
-        assert!(db.search_by_symbol("QQQ").is_some());
+        assert!(db.search_by_symbol("SPY").is_some());
     }
     #[test]
     fn find_by_name_lower() {
         let db = create_sample_db();
-        assert!(db.search_by_name("apple").is_some())
+        assert_eq!(db.search_by_name("apple").map(|s| s.symbol.as_str()), Some("AAPL"));
     }
 }
