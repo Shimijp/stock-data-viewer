@@ -13,7 +13,7 @@ df_clean.columns = ['symbol', 'name', 'is_etf']
 
 df_clean['is_etf'] = df_clean['is_etf'] == 'Y'
 
-df_clean = df_clean.drop_duplicates()
+df_clean = df_clean.drop_duplicates(subset ='symbol')
 
 df_sorted = df_clean.sort_values(by='symbol')
 
