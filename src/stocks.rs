@@ -26,7 +26,8 @@ impl StocksDb {
     }
     pub fn search_by_name(&self, name: &str) -> Option<&Stock> {
         let name_lower = name.to_lowercase();
-        self.stocks.iter()
+        self.stocks
+            .iter()
             .find(|&stock| stock.name.to_lowercase().contains(&name_lower))
             .map(|v| v as _)
     }

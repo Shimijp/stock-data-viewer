@@ -31,9 +31,6 @@ async fn get_ticker_info(
 #[allow(dead_code)]
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
-
-
     let client = YfClient::default();
     let ticker = Ticker::new(&client, "AAPL");
 

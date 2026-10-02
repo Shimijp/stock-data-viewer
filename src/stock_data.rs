@@ -1,5 +1,5 @@
-use chrono::DateTime;
 use crate::stocks::Stock;
+use chrono::DateTime;
 use chrono_tz::Tz;
 #[allow(dead_code)]
 pub struct DataPoint {
