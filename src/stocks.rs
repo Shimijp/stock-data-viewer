@@ -7,7 +7,6 @@ pub struct Stock {
     is_etf: bool,
 }
 
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct StocksDb {
     pub stocks: Vec<Stock>,
@@ -15,10 +14,8 @@ pub struct StocksDb {
 #[allow(dead_code)]
 impl StocksDb {
     pub fn new(mut stocks: Vec<Stock>) -> Self {
-        stocks.sort_by(|a,b| a.symbol.cmp(&b.symbol));
-        StocksDb {
-            stocks,
-        }
+        stocks.sort_by(|a, b| a.symbol.cmp(&b.symbol));
+        StocksDb { stocks }
     }
     pub fn search_by_symbol(&self, symbol: &str) -> Option<&Stock> {
         self.stocks
@@ -41,7 +38,6 @@ mod tests {
 
     #[test]
     fn finds_symbol() {
-
         let stocks_json = r#"[
     {
         "symbol": "AAPL",
@@ -64,8 +60,7 @@ mod tests {
         "is_etf": true
     }
 ]"#;
-        let stocks : Vec<Stock>= serde_json::from_str(stocks_json)
-            .expect("failed to load stocks");
+        let stocks: Vec<Stock> = serde_json::from_str(stocks_json).expect("failed to load stocks");
         let db = StocksDb::new(stocks);
         assert!(db.search_by_symbol("AAPL").is_some());
     }
