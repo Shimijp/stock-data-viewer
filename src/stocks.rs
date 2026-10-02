@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-#[allow(dead_code)]
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Stock {
     symbol: String,
@@ -9,7 +8,7 @@ pub struct Stock {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct StocksDb {
-    pub stocks: Vec<Stock>,
+    stocks: Vec<Stock>,
 }
 #[allow(dead_code)]
 impl StocksDb {

@@ -1,5 +1,3 @@
-mod stock_data;
-mod stocks;
 use chrono_tz::Asia::Jerusalem;
 use yfinance_rs::{Interval, Range, Ticker, YfClient};
 
