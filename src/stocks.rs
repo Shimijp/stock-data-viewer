@@ -61,7 +61,6 @@ mod tests {
 ]"#;
         let stocks: Vec<Stock> = serde_json::from_str(stocks_json).expect("failed to load stocks");
         StocksDb::new(stocks)
-
     }
     #[test]
     fn finds_symbol() {
@@ -81,6 +80,9 @@ mod tests {
     #[test]
     fn find_by_name_lower() {
         let db = create_sample_db();
-        assert_eq!(db.search_by_name("apple").map(|s| s.symbol.as_str()), Some("AAPL"));
+        assert_eq!(
+            db.search_by_name("apple").map(|s| s.symbol.as_str()),
+            Some("AAPL")
+        );
     }
 }
